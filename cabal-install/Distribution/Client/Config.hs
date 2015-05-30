@@ -813,14 +813,9 @@ parseConfig initial = \str -> do
 
     parseSections (rs, h, u, g, p, a)
                  (ParseUtils.F lno "remote-repo" raw) = do
-      r' <- maybe (fail $ "parse error in line " ++ show lno) return $ readRepo raw
+      let mr' = readRepo raw
+      r' <- maybe (ParseFailed $ NoParse "remote-repo" lno) return mr'
       return (r':rs, h, u, g, p, a)
-
--- Error parsing config file /mnt/slig-sda3/home/mf/.cabal/config:14:
-
--- Error parsing config file /mnt/slig-sda3/home/mf/.cabal/config:
--- parse error in line 16
-
 
     parseSections accum@(rs, h, u, g, p, a)
                  (ParseUtils.Section _ "haddock" name fs)
