@@ -43,6 +43,7 @@ module Distribution.Client.Setup
     --TODO: stop exporting these:
     , showRepo
     , parseRepo
+    , readRepo
     ) where
 
 import Distribution.Client.Types

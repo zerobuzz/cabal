@@ -51,7 +51,7 @@ import Distribution.Client.Setup
          , InstallFlags(..), installOptions, defaultInstallFlags
          , UploadFlags(..), uploadCommand
          , ReportFlags(..), reportCommand
-         , showRepo, parseRepo )
+         , showRepo, parseRepo, readRepo )
 import Distribution.Utils.NubList
          ( NubList, fromNubList, toNubList)
 
@@ -796,9 +796,7 @@ parseConfig initial = \str -> do
 
   where
     isKnownSection (ParseUtils.Section _ "remote-repo" _ _)             = True
-{-
     isKnownSection (ParseUtils.F _ "remote-repo" _)                     = True
--}
     isKnownSection (ParseUtils.Section _ "haddock" _ _)                 = True
     isKnownSection (ParseUtils.Section _ "install-dirs" _ _)            = True
     isKnownSection (ParseUtils.Section _ "program-locations" _ _)       = True
@@ -813,16 +811,15 @@ parseConfig initial = \str -> do
       r' <- parseFields remoteRepoFields (emptyRemoteRepo name) fs
       return (r':rs, h, u, g, p, a)
 
-
-
-{-
     parseSections (rs, h, u, g, p, a)
-                 (ParseUtils.F _ "remote-repo" raw) = do
-      let (name, fs) = _
-      r' <- parseFields remoteRepoFields (emptyRemoteRepo name) fs
+                 (ParseUtils.F lno "remote-repo" raw) = do
+      r' <- maybe (fail $ "parse error in line " ++ show lno) return $ readRepo raw
       return (r':rs, h, u, g, p, a)
--}
 
+-- Error parsing config file /mnt/slig-sda3/home/mf/.cabal/config:14:
+
+-- Error parsing config file /mnt/slig-sda3/home/mf/.cabal/config:
+-- parse error in line 16
 
 
     parseSections accum@(rs, h, u, g, p, a)
