@@ -142,7 +142,8 @@ executable cabal
         random     >= 1        && < 1.2,
         stm        >= 2.0      && < 3,
         time       >= 1.1      && < 1.6,
-        zlib       >= 0.6
+        zlib       >= 0.6,
+        hackage-security >= 0.1.0.0
 
     if flag(old-directory)
       build-depends: directory >= 1 && < 1.2, old-time >= 1 && < 1.2,
