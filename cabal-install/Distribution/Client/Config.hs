@@ -782,9 +782,10 @@ parseConfig initial = \str -> do
           ([], savedHaddockFlags config, user0, global0, [], [])
           knownSections
 
-  _ <- error $ show (fields, remoteRepoSections)
-
   return config {
+    savedGlobalFlags       = (savedGlobalFlags config) {
+       globalRemoteRepos   = toNubList remoteRepoSections
+       },
     savedConfigureFlags    = (savedConfigureFlags config) {
        configProgramPaths  = paths,
        configProgramArgs   = args
