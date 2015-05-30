@@ -2148,8 +2148,9 @@ parseRepo = do
   uriStr <- Parse.munch1 (\c -> isAlphaNum c || c `elem` "+-=._/*()@'$:;&!?~")
   uri <- maybe Parse.pfail return (parseAbsoluteURI uriStr)
   return $ RemoteRepo {
-    remoteRepoName = name,
-    remoteRepoURI  = uri
+    remoteRepoName     = name,
+    remoteRepoURI      = uri,
+    remoteRepoRootKeys = ()
   }
 
 -- ------------------------------------------------------------
